@@ -1,0 +1,83 @@
+diff --git a/app/javascript/mastodon/features/compose/containers/compose_form_container.js b/app/javascript/mastodon/features/compose/containers/compose_form_container.js
+index 15b1c7cc4..d16ecb782 100644
+--- a/app/javascript/mastodon/features/compose/containers/compose_form_container.js
++++ b/app/javascript/mastodon/features/compose/containers/compose_form_container.js
+@@ -39,7 +39,7 @@ const mapStateToProps = state => ({
+     && !state.getIn(['settings', 'dismissed_banners', PRIVATE_QUOTE_MODAL_ID]),
+   isInReply: state.getIn(['compose', 'in_reply_to']) !== null,
+   lang: state.getIn(['compose', 'language']),
+-  maxChars: state.getIn(['server', 'server', 'configuration', 'statuses', 'max_characters'], 500),
++  maxChars: state.getIn(['server', 'server', 'configuration', 'statuses', 'max_characters'], 2000),
+ });
+ 
+ const mapDispatchToProps = (dispatch, props) => ({
+diff --git a/app/lib/feed_manager.rb b/app/lib/feed_manager.rb
+index 9c5c306e9..fedaa6a39 100644
+--- a/app/lib/feed_manager.rb
++++ b/app/lib/feed_manager.rb
+@@ -12,7 +12,7 @@ class FeedManager
+   # Number of items in the feed since last reblog of status
+   # before the new reblog will be inserted. Must be <= MAX_ITEMS
+   # or the tracking sets will grow forever
+-  REBLOG_FALLOFF = 40
++  REBLOG_FALLOFF = 400
+ 
+   # Execute block for every active account
+   # @yield [Account]
+diff --git a/app/models/account.rb b/app/models/account.rb
+index 5f4caf9ea..07d74dcec 100644
+--- a/app/models/account.rb
++++ b/app/models/account.rb
+@@ -77,8 +77,8 @@ class Account < ApplicationRecord
+   URL_PREFIX_RE = %r{\Ahttp(s?)://[^/]+}
+   USERNAME_ONLY_RE = /\A#{USERNAME_RE}\z/i
+   USERNAME_LENGTH_LIMIT = 30
+-  DISPLAY_NAME_LENGTH_LIMIT = 30
+-  NOTE_LENGTH_LIMIT = 500
++  DISPLAY_NAME_LENGTH_LIMIT = 100
++  NOTE_LENGTH_LIMIT = 2000
+ 
+   AUTOMATED_ACTOR_TYPES = %w(Application Service).freeze
+ 
+diff --git a/app/validators/poll_options_validator.rb b/app/validators/poll_options_validator.rb
+index fd29fc1b4..7757cc969 100644
+--- a/app/validators/poll_options_validator.rb
++++ b/app/validators/poll_options_validator.rb
+@@ -1,7 +1,7 @@
+ # frozen_string_literal: true
+ 
+ class PollOptionsValidator < ActiveModel::Validator
+-  MAX_OPTIONS      = 4
++  MAX_OPTIONS      = 20
+   MAX_OPTION_CHARS = 50
+ 
+   def validate(poll)
+diff --git a/app/validators/status_length_validator.rb b/app/validators/status_length_validator.rb
+index 575aaf186..986133d74 100644
+--- a/app/validators/status_length_validator.rb
++++ b/app/validators/status_length_validator.rb
+@@ -1,7 +1,7 @@
+ # frozen_string_literal: true
+ 
+ class StatusLengthValidator < ActiveModel::Validator
+-  MAX_CHARS = 500
++  MAX_CHARS = 2000
+   URL_PLACEHOLDER_CHARS = 23
+   URL_PLACEHOLDER = 'x' * 23
+ 
+diff --git a/config/themes.yml b/config/themes.yml
+index 9c21c9459..c80ef6915 100644
+--- a/config/themes.yml
++++ b/config/themes.yml
+@@ -1,3 +1,11 @@
+ default: styles/application.scss
+ contrast: styles/contrast.scss
+ mastodon-light: styles/mastodon-light.scss
++mastodon-cyberpunk-neon: styles/mastodon-cyberpunk-neon.scss
++tangerineui: styles/tangerineui.scss
++tangerineui-purple: styles/tangerineui-purple.scss
++tangerineui-cherry: styles/tangerineui-cherry.scss
++tangerineui-lagoon: styles/tangerineui-lagoon.scss
++mastodon-bird-ui: styles/mastodon-bird-ui-dark.scss
++mastodon-bird-ui-light: styles/mastodon-bird-ui-light.scss
++mastodon-bird-ui-contrast: styles/mastodon-bird-ui-contrast.scss
