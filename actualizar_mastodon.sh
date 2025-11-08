@@ -6,7 +6,7 @@ DIR=$(pwd)
 LIVE=$DIR/../live
 
 cd $LIVE
-git checkout .
+git fetch
 # Read the options from a file
 SAVEIFS=$IFS   # Save current IFS (Internal Field Separator)
 IFS=$'\n'      # Change IFS to newline char
@@ -20,6 +20,7 @@ select opt in "${options[@]}" "Exit"; do
     case $opt in
         *)
             printf "\nObteniendo tag $opt y aplicando parche...\n"
+            git checkout .
             git checkout $opt
             git apply $DIR/mastoes.diff
             break
