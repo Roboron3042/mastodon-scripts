@@ -25,7 +25,7 @@ index 9c5c306e9..fedaa6a39 100644
    # Execute block for every active account
    # @yield [Account]
 diff --git a/app/models/account.rb b/app/models/account.rb
-index 5f4caf9ea..07d74dcec 100644
+index 4ec2af7ab..1cf6442bc 100644
 --- a/app/models/account.rb
 +++ b/app/models/account.rb
 @@ -77,8 +77,8 @@ class Account < ApplicationRecord
@@ -37,7 +37,8 @@ index 5f4caf9ea..07d74dcec 100644
 +  DISPLAY_NAME_LENGTH_LIMIT = 100
 +  NOTE_LENGTH_LIMIT = 2000
  
-   AUTOMATED_ACTOR_TYPES = %w(Application Service).freeze
+   # Hard limits for federated content
+   USERNAME_LENGTH_HARD_LIMIT = 2048
  
 diff --git a/app/validators/poll_options_validator.rb b/app/validators/poll_options_validator.rb
 index fd29fc1b4..7757cc969 100644
