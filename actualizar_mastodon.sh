@@ -15,7 +15,7 @@ options=($options) # split the `names` string into an array by the same name
 IFS=$SAVEIFS   # Restore original IFS
 
 # Display the menu and get user input
-printf "\nElige una versión para obtener. Si hay conflictos, tendrás que resolverlos. "
+printf "\nElige una versión para obtener. Si hay conflictos, tendrás que resolverlos.\n"
 select opt in "${options[@]}" "Exit"; do
     case $opt in
         *)
