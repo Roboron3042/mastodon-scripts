@@ -10,7 +10,7 @@ git fetch
 # Read the options from a file
 SAVEIFS=$IFS   # Save current IFS (Internal Field Separator)
 IFS=$'\n'      # Change IFS to newline char
-options=$(git tag -l | tail -n 6)
+options=$(git tag -l --sort authordate | tail -n 9)
 options=($options) # split the `names` string into an array by the same name
 IFS=$SAVEIFS   # Restore original IFS
 
