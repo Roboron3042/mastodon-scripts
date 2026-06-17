@@ -41,10 +41,11 @@ read -s -n 1
 printf "\nInstalando temas y precompilando assets...\n"
 cd $DIR
 echo "$(pwd)"
-./actualizar_temas.sh
+#./actualizar_temas.sh
 cd $LIVE
 
-#RAILS_ENV=production bundle exec rails assets:precompile
+# Comentar si ya se está ejecutando actualizar_temas.sh
+RAILS_ENV=production bundle exec rails assets:precompile
 
 printf "\nReiniciando servicios..."
 sudo systemctl reload-or-restart mastodon-{web,streaming,sidekiq-*}
